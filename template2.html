@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Berita Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-item {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gradient-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+        }
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">Portal Berita Sekolah</h1>
+                <p class="text-blue-200">Informasi Terkini Seputar Dunia Pendidikan</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Featured News Slider -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Berita Terbaru</h2>
+            <div class="slider-container rounded-2xl overflow-hidden shadow-2xl">
+                <div id="slider-track" class="slider-track">
+                    <!-- Slide 1 -->
+                    <div class="slider-item relative">
+                        <div class="h-96 bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center relative overflow-hidden">
+                            <!-- Background Pattern -->
+                            <div class="absolute inset-0 opacity-10">
+                                <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+                                        </pattern>
+                                    </defs>
+                                    <rect width="100" height="100" fill="url(#grid)" />
+                                </svg>
+                            </div>
+                            <div class="gradient-overlay absolute inset-0"></div>
+                            <div class="relative z-10 text-center text-white p-8">
+                                <span class="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4">BREAKING NEWS</span>
+                                <h3 class="text-4xl font-bold mb-4">Penerimaan Siswa Baru 2024 Dibuka</h3>
+                                <p class="text-xl mb-6 text-gray-200">Pendaftaran siswa baru tahun ajaran 2024/2025 telah resmi dibuka dengan berbagai jalur masuk yang tersedia</p>
+                                <div class="flex items-center justify-center space-x-4 text-sm">
+                                    <span><i class="fas fa-calendar mr-2"></i>15 Januari 2024</span>
+                                    <span><i class="fas fa-user mr-2"></i>Admin Sekolah</span>
+                                    <span><i class="fas fa-eye mr-2"></i>1,234 views</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="slider-item relative">
+                        <div class="h-96 bg-gradient-to-br from-green-600 to-teal-700 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 opacity-10">
+                                <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="20" cy="20" r="2" fill="white"/>
+                                    <circle cx="50" cy="30" r="3" fill="white"/>
+                                    <circle cx="80" cy="25" r="2" fill="white"/>
+                                    <circle cx="30" cy="60" r="2" fill="white"/>
+                                    <circle cx="70" cy="70" r="3" fill="white"/>
+                                    <circle cx="40" cy="80" r="2" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="gradient-overlay absolute inset-0"></div>
+                            <div class="relative z-10 text-center text-white p-8">
+                                <span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4">PRESTASI</span>
+                                <h3 class="text-4xl font-bold mb-4">Juara 1 Olimpiade Matematika Nasional</h3>
+                                <p class="text-xl mb-6 text-gray-200">Siswa kelas IX berhasil meraih juara 1 dalam kompetisi olimpiade matematika tingkat nasional</p>
+                                <div class="flex items-center justify-center space-x-4 text-sm">
+                                    <span><i class="fas fa-calendar mr-2"></i>12 Januari 2024</span>
+                                    <span><i class="fas fa-user mr-2"></i>Tim Redaksi</span>
+                                    <span><i class="fas fa-eye mr-2"></i>856 views</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="slider-item relative">
+                        <div class="h-96 bg-gradient-to-br from-orange-600 to-red-700 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 opacity-10">
+                                <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="50,10 60,35 85,35 65,55 75,80 50,65 25,80 35,55 15,35 40,35" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="gradient-overlay absolute inset-0"></div>
+                            <div class="relative z-10 text-center text-white p-8">
+                                <span class="inline-block bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4">KEGIATAN</span>
+                                <h3 class="text-4xl font-bold mb-4">Festival Seni dan Budaya 2024</h3>
+                                <p class="text-xl mb-6 text-gray-200">Perayaan festival seni dan budaya tahunan dengan berbagai pertunjukan menarik dari seluruh siswa</p>
+                                <div class="flex items-center justify-center space-x-4 text-sm">
+                                    <span><i class="fas fa-calendar mr-2"></i>10 Januari 2024</span>
+                                    <span><i class="fas fa-user mr-2"></i>Humas Sekolah</span>
+                                    <span><i class="fas fa-eye mr-2"></i>2,145 views</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Dots Indicator -->
+                <div class="slider-dots absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    <div class="dot active" onclick="goToSlide(0)"></div>
+                    <div class="dot" onclick="goToSlide(1)"></div>
+                    <div class="dot" onclick="goToSlide(2)"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Grid -->
+        <section>
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Berita Lainnya</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- News Card 1 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-graduation-cap text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">AKADEMIK</span>
+                            <span class="text-gray-500 text-sm ml-auto">8 Jan 2024</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Kurikulum Merdeka Diterapkan di Semua Tingkat</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Sekolah resmi menerapkan kurikulum merdeka untuk memberikan pembelajaran yang lebih fleksibel dan sesuai dengan kebutuhan siswa...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>542 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 2 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-leaf text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">LINGKUNGAN</span>
+                            <span class="text-gray-500 text-sm ml-auto">5 Jan 2024</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Program Go Green Sekolah Ramah Lingkungan</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Inisiatif sekolah untuk menciptakan lingkungan yang lebih hijau dengan program penanaman pohon dan pengelolaan sampah...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>387 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 3 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-trophy text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold">KOMPETISI</span>
+                            <span class="text-gray-500 text-sm ml-auto">3 Jan 2024</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Lomba Karya Tulis Ilmiah Tingkat Provinsi</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Siswa kelas XI berhasil meraih juara 2 dalam lomba karya tulis ilmiah tingkat provinsi dengan tema teknologi pendidikan...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>721 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 4 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-heart text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">SOSIAL</span>
+                            <span class="text-gray-500 text-sm ml-auto">1 Jan 2024</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Bakti Sosial untuk Korban Bencana Alam</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Kegiatan penggalangan dana dan bantuan untuk korban bencana alam yang melibatkan seluruh warga sekolah...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>1,023 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 5 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-lightbulb text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">INOVASI</span>
+                            <span class="text-gray-500 text-sm ml-auto">28 Des 2023</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Laboratorium Digital Terbaru Diresmikan</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Fasilitas laboratorium komputer dengan teknologi terdepan untuk mendukung pembelajaran digital siswa...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>654 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 6 -->
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <i class="fas fa-users text-6xl text-white relative z-10"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-semibold">KOMUNITAS</span>
+                            <span class="text-gray-500 text-sm ml-auto">25 Des 2023</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">Pertemuan Alumni Tahunan 2023</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Acara reuni alumni yang dihadiri ratusan lulusan dari berbagai angkatan untuk berbagi pengalaman dan networking...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-eye mr-1"></i>
+                                <span>892 views</span>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300">
+                    <i class="fas fa-plus mr-2"></i>Muat Berita Lainnya
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Portal Berita Sekolah. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        const totalSlides = slides.length;
+        const sliderTrack = document.getElementById('slider-track');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlider() {
+            sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+
+        // Event listeners
+        document.getElementById('next-btn').addEventListener('click', nextSlide);
+        document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+        // Auto-slide functionality
+        let autoSlideInterval = setInterval(nextSlide, 5000);
+
+        // Pause auto-slide on hover
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        sliderContainer.addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+
+        sliderContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        sliderContainer.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize
+        updateSlider();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98ad001b86433f31',t:'MTc1OTgzNTkzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

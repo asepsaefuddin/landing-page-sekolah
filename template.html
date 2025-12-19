@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .editor-toolbar {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .editor-content {
+            min-height: 200px;
+            outline: none;
+        }
+        .editor-content:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-blue-800 to-blue-900 text-white transform transition-transform duration-300 z-50">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold mb-8">Dashboard Sekolah</h1>
+            <nav class="space-y-2">
+                <a href="#" onclick="showSection('ppdb')" class="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-user-graduate mr-3"></i>
+                    PPDB
+                </a>
+                <a href="#" onclick="showSection('siswa')" class="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-users mr-3"></i>
+                    Data Siswa
+                </a>
+                <a href="#" onclick="showSection('guru')" class="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-chalkboard-teacher mr-3"></i>
+                    Data Guru
+                </a>
+                <a href="#" onclick="showSection('berita')" class="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-newspaper mr-3"></i>
+                    Berita
+                </a>
+                <a href="#" onclick="showSection('bookmark')" class="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-bookmark mr-3"></i>
+                    Bookmark
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-blue-800 text-white p-2 rounded-lg">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 min-h-screen">
+        <!-- PPDB Section -->
+        <div id="ppdb-section" class="section p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Data PPDB</h2>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Nama</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">NISN</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Jalur</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Asal Sekolah</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Kontak</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Berkas</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ppdb-table" class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3">Ahmad Rizki</td>
+                                <td class="px-4 py-3">1234567890</td>
+                                <td class="px-4 py-3">Zonasi</td>
+                                <td class="px-4 py-3">SDN 01 Jakarta</td>
+                                <td class="px-4 py-3">081234567890</td>
+                                <td class="px-4 py-3"><span class="text-green-600">✓ Lengkap</span></td>
+                                <td class="px-4 py-3">
+                                    <button onclick="editPPDB(0)" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deletePPDB(0)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Siswa Section -->
+        <div id="siswa-section" class="section p-6 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Data Siswa</h2>
+                    <button onclick="showSiswaForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>Tambah Siswa
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Nama</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">NISN</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Kelas</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Jalur</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Asal Sekolah</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Kontak</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Berkas</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="siswa-table" class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3">Siti Nurhaliza</td>
+                                <td class="px-4 py-3">0987654321</td>
+                                <td class="px-4 py-3">VII-A</td>
+                                <td class="px-4 py-3">Prestasi</td>
+                                <td class="px-4 py-3">SDN 02 Bandung</td>
+                                <td class="px-4 py-3">082345678901</td>
+                                <td class="px-4 py-3"><span class="text-green-600">✓ Lengkap</span></td>
+                                <td class="px-4 py-3">
+                                    <button onclick="editSiswa(0)" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteSiswa(0)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Guru Section -->
+        <div id="guru-section" class="section p-6 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Data Guru</h2>
+                    <button onclick="showGuruForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>Tambah Guru
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Nama</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">NIP</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Mata Pelajaran</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Kontak</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Berkas</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guru-table" class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3">Dr. Budi Santoso</td>
+                                <td class="px-4 py-3">196501011990031001</td>
+                                <td class="px-4 py-3">Matematika</td>
+                                <td class="px-4 py-3">083456789012</td>
+                                <td class="px-4 py-3"><span class="text-green-600">✓ Lengkap</span></td>
+                                <td class="px-4 py-3">
+                                    <button onclick="editGuru(0)" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteGuru(0)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Berita Section -->
+        <div id="berita-section" class="section p-6 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Berita</h2>
+                    <button onclick="showBeritaForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>Tambah Berita
+                    </button>
+                </div>
+                
+                <div class="grid gap-4">
+                    <div id="berita-list">
+                        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Penerimaan Siswa Baru 2024</h3>
+                                    <p class="text-gray-600 mb-2">Pendaftaran siswa baru tahun ajaran 2024/2025 telah dibuka...</p>
+                                    <span class="text-sm text-gray-500">15 Januari 2024</span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="editBerita(0)" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteBerita(0)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookmark Section -->
+        <div id="bookmark-section" class="section p-6 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Bookmark</h2>
+                    <button onclick="showBookmarkForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>Tambah Bookmark
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">No</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Judul</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Link</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookmark-table" class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3">1</td>
+                                <td class="px-4 py-3">Portal Kemendikbud</td>
+                                <td class="px-4 py-3">
+                                    <a href="https://kemdikbud.go.id" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                                        https://kemdikbud.go.id
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <button onclick="editBookmark(0)" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteBookmark(0)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-title" class="text-xl font-bold text-gray-800"></h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let ppdbData = [
+            {nama: 'Ahmad Rizki', nisn: '1234567890', jalur: 'Zonasi', asal: 'SDN 01 Jakarta', kontak: '081234567890', berkas: 'Lengkap'}
+        ];
+        
+        let siswaData = [
+            {nama: 'Siti Nurhaliza', nisn: '0987654321', kelas: 'VII-A', jalur: 'Prestasi', asal: 'SDN 02 Bandung', kontak: '082345678901', berkas: 'Lengkap'}
+        ];
+        
+        let guruData = [
+            {nama: 'Dr. Budi Santoso', nip: '196501011990031001', mapel: 'Matematika', kontak: '083456789012', berkas: 'Lengkap'}
+        ];
+        
+        let beritaData = [
+            {judul: 'Penerimaan Siswa Baru 2024', konten: 'Pendaftaran siswa baru tahun ajaran 2024/2025 telah dibuka...', tanggal: '15 Januari 2024'}
+        ];
+        
+        let bookmarkData = [
+            {judul: 'Portal Kemendikbud', link: 'https://kemdikbud.go.id'}
+        ];
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Show section
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(section + '-section').classList.remove('hidden');
+            
+            // Close mobile menu
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+            }
+        }
+
+        // Modal functions
+        function showModal(title, content) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // PPDB Functions
+        function editPPDB(index) {
+            const data = ppdbData[index];
+            const form = `
+                <form onsubmit="updatePPDB(event, ${index})">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                            <input type="text" name="nama" value="${data.nama}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NISN</label>
+                            <input type="text" name="nisn" value="${data.nisn}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Jalur</label>
+                            <select name="jalur" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="Zonasi" ${data.jalur === 'Zonasi' ? 'selected' : ''}>Zonasi</option>
+                                <option value="Prestasi" ${data.jalur === 'Prestasi' ? 'selected' : ''}>Prestasi</option>
+                                <option value="Afirmasi" ${data.jalur === 'Afirmasi' ? 'selected' : ''}>Afirmasi</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Asal Sekolah</label>
+                            <input type="text" name="asal" value="${data.asal}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kontak</label>
+                            <input type="tel" name="kontak" value="${data.kontak}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status Berkas</label>
+                            <select name="berkas" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="Lengkap" ${data.berkas === 'Lengkap' ? 'selected' : ''}>Lengkap</option>
+                                <option value="Belum Lengkap" ${data.berkas === 'Belum Lengkap' ? 'selected' : ''}>Belum Lengkap</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Batal</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Simpan</button>
+                    </div>
+                </form>
+            `;
+            showModal('Edit Data PPDB', form);
+        }
+
+        function updatePPDB(event, index) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            ppdbData[index] = {
+                nama: formData.get('nama'),
+                nisn: formData.get('nisn'),
+                jalur: formData.get('jalur'),
+                asal: formData.get('asal'),
+                kontak: formData.get('kontak'),
+                berkas: formData.get('berkas')
+            };
+            renderPPDBTable();
+            closeModal();
+        }
+
+        function deletePPDB(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                ppdbData.splice(index, 1);
+                renderPPDBTable();
+            }
+        }
+
+        function renderPPDBTable() {
+            const tbody = document.getElementById('ppdb-table');
+            tbody.innerHTML = ppdbData.map((data, index) => `
+                <tr>
+                    <td class="px-4 py-3">${data.nama}</td>
+                    <td class="px-4 py-3">${data.nisn}</td>
+                    <td class="px-4 py-3">${data.jalur}</td>
+                    <td class="px-4 py-3">${data.asal}</td>
+                    <td class="px-4 py-3">${data.kontak}</td>
+                    <td class="px-4 py-3"><span class="text-${data.berkas === 'Lengkap' ? 'green' : 'red'}-600">${data.berkas === 'Lengkap' ? '✓' : '✗'} ${data.berkas}</span></td>
+                    <td class="px-4 py-3">
+                        <button onclick="editPPDB(${index})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deletePPDB(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Siswa Functions
+        function showSiswaForm(index = null) {
+            const data = index !== null ? siswaData[index] : {nama: '', nisn: '', kelas: '', jalur: '', asal: '', kontak: '', berkas: 'Belum Lengkap'};
+            const isEdit = index !== null;
+            
+            const form = `
+                <form onsubmit="${isEdit ? `updateSiswa(event, ${index})` : 'createSiswa(event)'}">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                            <input type="text" name="nama" value="${data.nama}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NISN</label>
+                            <input type="text" name="nisn" value="${data.nisn}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kelas</label>
+                            <select name="kelas" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="">Pilih Kelas</option>
+                                <option value="VII-A" ${data.kelas === 'VII-A' ? 'selected' : ''}>VII-A</option>
+                                <option value="VII-B" ${data.kelas === 'VII-B' ? 'selected' : ''}>VII-B</option>
+                                <option value="VIII-A" ${data.kelas === 'VIII-A' ? 'selected' : ''}>VIII-A</option>
+                                <option value="VIII-B" ${data.kelas === 'VIII-B' ? 'selected' : ''}>VIII-B</option>
+                                <option value="IX-A" ${data.kelas === 'IX-A' ? 'selected' : ''}>IX-A</option>
+                                <option value="IX-B" ${data.kelas === 'IX-B' ? 'selected' : ''}>IX-B</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Jalur</label>
+                            <select name="jalur" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="">Pilih Jalur</option>
+                                <option value="Zonasi" ${data.jalur === 'Zonasi' ? 'selected' : ''}>Zonasi</option>
+                                <option value="Prestasi" ${data.jalur === 'Prestasi' ? 'selected' : ''}>Prestasi</option>
+                                <option value="Afirmasi" ${data.jalur === 'Afirmasi' ? 'selected' : ''}>Afirmasi</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Asal Sekolah</label>
+                            <input type="text" name="asal" value="${data.asal}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kontak</label>
+                            <input type="tel" name="kontak" value="${data.kontak}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status Berkas</label>
+                            <select name="berkas" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="Lengkap" ${data.berkas === 'Lengkap' ? 'selected' : ''}>Lengkap</option>
+                                <option value="Belum Lengkap" ${data.berkas === 'Belum Lengkap' ? 'selected' : ''}>Belum Lengkap</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Batal</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">${isEdit ? 'Update' : 'Simpan'}</button>
+                    </div>
+                </form>
+            `;
+            showModal(isEdit ? 'Edit Data Siswa' : 'Tambah Data Siswa', form);
+        }
+
+        function createSiswa(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            siswaData.push({
+                nama: formData.get('nama'),
+                nisn: formData.get('nisn'),
+                kelas: formData.get('kelas'),
+                jalur: formData.get('jalur'),
+                asal: formData.get('asal'),
+                kontak: formData.get('kontak'),
+                berkas: formData.get('berkas')
+            });
+            renderSiswaTable();
+            closeModal();
+        }
+
+        function editSiswa(index) {
+            showSiswaForm(index);
+        }
+
+        function updateSiswa(event, index) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            siswaData[index] = {
+                nama: formData.get('nama'),
+                nisn: formData.get('nisn'),
+                kelas: formData.get('kelas'),
+                jalur: formData.get('jalur'),
+                asal: formData.get('asal'),
+                kontak: formData.get('kontak'),
+                berkas: formData.get('berkas')
+            };
+            renderSiswaTable();
+            closeModal();
+        }
+
+        function deleteSiswa(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                siswaData.splice(index, 1);
+                renderSiswaTable();
+            }
+        }
+
+        function renderSiswaTable() {
+            const tbody = document.getElementById('siswa-table');
+            tbody.innerHTML = siswaData.map((data, index) => `
+                <tr>
+                    <td class="px-4 py-3">${data.nama}</td>
+                    <td class="px-4 py-3">${data.nisn}</td>
+                    <td class="px-4 py-3">${data.kelas}</td>
+                    <td class="px-4 py-3">${data.jalur}</td>
+                    <td class="px-4 py-3">${data.asal}</td>
+                    <td class="px-4 py-3">${data.kontak}</td>
+                    <td class="px-4 py-3"><span class="text-${data.berkas === 'Lengkap' ? 'green' : 'red'}-600">${data.berkas === 'Lengkap' ? '✓' : '✗'} ${data.berkas}</span></td>
+                    <td class="px-4 py-3">
+                        <button onclick="editSiswa(${index})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteSiswa(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Guru Functions
+        function showGuruForm(index = null) {
+            const data = index !== null ? guruData[index] : {nama: '', nip: '', mapel: '', kontak: '', berkas: 'Belum Lengkap'};
+            const isEdit = index !== null;
+            
+            const form = `
+                <form onsubmit="${isEdit ? `updateGuru(event, ${index})` : 'createGuru(event)'}">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                            <input type="text" name="nama" value="${data.nama}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NIP</label>
+                            <input type="text" name="nip" value="${data.nip}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                            <input type="text" name="mapel" value="${data.mapel}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kontak</label>
+                            <input type="tel" name="kontak" value="${data.kontak}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status Berkas</label>
+                            <select name="berkas" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                <option value="Lengkap" ${data.berkas === 'Lengkap' ? 'selected' : ''}>Lengkap</option>
+                                <option value="Belum Lengkap" ${data.berkas === 'Belum Lengkap' ? 'selected' : ''}>Belum Lengkap</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Batal</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">${isEdit ? 'Update' : 'Simpan'}</button>
+                    </div>
+                </form>
+            `;
+            showModal(isEdit ? 'Edit Data Guru' : 'Tambah Data Guru', form);
+        }
+
+        function createGuru(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            guruData.push({
+                nama: formData.get('nama'),
+                nip: formData.get('nip'),
+                mapel: formData.get('mapel'),
+                kontak: formData.get('kontak'),
+                berkas: formData.get('berkas')
+            });
+            renderGuruTable();
+            closeModal();
+        }
+
+        function editGuru(index) {
+            showGuruForm(index);
+        }
+
+        function updateGuru(event, index) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            guruData[index] = {
+                nama: formData.get('nama'),
+                nip: formData.get('nip'),
+                mapel: formData.get('mapel'),
+                kontak: formData.get('kontak'),
+                berkas: formData.get('berkas')
+            };
+            renderGuruTable();
+            closeModal();
+        }
+
+        function deleteGuru(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                guruData.splice(index, 1);
+                renderGuruTable();
+            }
+        }
+
+        function renderGuruTable() {
+            const tbody = document.getElementById('guru-table');
+            tbody.innerHTML = guruData.map((data, index) => `
+                <tr>
+                    <td class="px-4 py-3">${data.nama}</td>
+                    <td class="px-4 py-3">${data.nip}</td>
+                    <td class="px-4 py-3">${data.mapel}</td>
+                    <td class="px-4 py-3">${data.kontak}</td>
+                    <td class="px-4 py-3"><span class="text-${data.berkas === 'Lengkap' ? 'green' : 'red'}-600">${data.berkas === 'Lengkap' ? '✓' : '✗'} ${data.berkas}</span></td>
+                    <td class="px-4 py-3">
+                        <button onclick="editGuru(${index})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteGuru(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Berita Functions
+        function showBeritaForm(index = null) {
+            const data = index !== null ? beritaData[index] : {judul: '', konten: '', tanggal: new Date().toLocaleDateString('id-ID')};
+            const isEdit = index !== null;
+            
+            const form = `
+                <form onsubmit="${isEdit ? `updateBerita(event, ${index})` : 'createBerita(event)'}">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Judul Berita</label>
+                            <input type="text" name="judul" value="${data.judul}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
+                            <div class="border border-gray-300 rounded-lg">
+                                <div class="editor-toolbar bg-gray-50 p-2 flex space-x-2 rounded-t-lg">
+                                    <button type="button" onclick="formatText('bold')" class="px-3 py-1 bg-white border rounded hover:bg-gray-100">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button type="button" onclick="formatText('italic')" class="px-3 py-1 bg-white border rounded hover:bg-gray-100">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button type="button" onclick="formatText('underline')" class="px-3 py-1 bg-white border rounded hover:bg-gray-100">
+                                        <i class="fas fa-underline"></i>
+                                    </button>
+                                    <button type="button" onclick="insertImage()" class="px-3 py-1 bg-white border rounded hover:bg-gray-100">
+                                        <i class="fas fa-image"></i>
+                                    </button>
+                                </div>
+                                <div id="editor" class="editor-content p-4" contenteditable="true" style="min-height: 200px;">${data.konten}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Batal</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">${isEdit ? 'Update' : 'Simpan'}</button>
+                    </div>
+                </form>
+            `;
+            showModal(isEdit ? 'Edit Berita' : 'Tambah Berita', form);
+        }
+
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            document.getElementById('editor').focus();
+        }
+
+        function insertImage() {
+            const url = prompt('Masukkan URL gambar:');
+            if (url) {
+                document.execCommand('insertImage', false, url);
+            }
+        }
+
+        function createBerita(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const konten = document.getElementById('editor').innerHTML;
+            beritaData.push({
+                judul: formData.get('judul'),
+                konten: konten,
+                tanggal: new Date().toLocaleDateString('id-ID')
+            });
+            renderBeritaList();
+            closeModal();
+        }
+
+        function editBerita(index) {
+            showBeritaForm(index);
+        }
+
+        function updateBerita(event, index) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const konten = document.getElementById('editor').innerHTML;
+            beritaData[index] = {
+                judul: formData.get('judul'),
+                konten: konten,
+                tanggal: beritaData[index].tanggal
+            };
+            renderBeritaList();
+            closeModal();
+        }
+
+        function deleteBerita(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+                beritaData.splice(index, 1);
+                renderBeritaList();
+            }
+        }
+
+        function renderBeritaList() {
+            const container = document.getElementById('berita-list');
+            container.innerHTML = beritaData.map((data, index) => `
+                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">${data.judul}</h3>
+                            <p class="text-gray-600 mb-2">${data.konten.replace(/<[^>]*>/g, '').substring(0, 100)}...</p>
+                            <span class="text-sm text-gray-500">${data.tanggal}</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editBerita(${index})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteBerita(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Bookmark Functions
+        function showBookmarkForm(index = null) {
+            const data = index !== null ? bookmarkData[index] : {judul: '', link: ''};
+            const isEdit = index !== null;
+            
+            const form = `
+                <form onsubmit="${isEdit ? `updateBookmark(event, ${index})` : 'createBookmark(event)'}">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Judul</label>
+                            <input type="text" name="judul" value="${data.judul}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Link</label>
+                            <input type="url" name="link" value="${data.link}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Batal</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">${isEdit ? 'Update' : 'Simpan'}</button>
+                    </div>
+                </form>
+            `;
+            showModal(isEdit ? 'Edit Bookmark' : 'Tambah Bookmark', form);
+        }
+
+        function createBookmark(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            bookmarkData.push({
+                judul: formData.get('judul'),
+                link: formData.get('link')
+            });
+            renderBookmarkTable();
+            closeModal();
+        }
+
+        function editBookmark(index) {
+            showBookmarkForm(index);
+        }
+
+        function updateBookmark(event, index) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            bookmarkData[index] = {
+                judul: formData.get('judul'),
+                link: formData.get('link')
+            };
+            renderBookmarkTable();
+            closeModal();
+        }
+
+        function deleteBookmark(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus bookmark ini?')) {
+                bookmarkData.splice(index, 1);
+                renderBookmarkTable();
+            }
+        }
+
+        function renderBookmarkTable() {
+            const tbody = document.getElementById('bookmark-table');
+            tbody.innerHTML = bookmarkData.map((data, index) => `
+                <tr>
+                    <td class="px-4 py-3">${index + 1}</td>
+                    <td class="px-4 py-3">${data.judul}</td>
+                    <td class="px-4 py-3">
+                        <a href="${data.link}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                            ${data.link}
+                        </a>
+                    </td>
+                    <td class="px-4 py-3">
+                        <button onclick="editBookmark(${index})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteBookmark(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('ppdb');
+            
+            // Close sidebar on mobile when clicking outside
+            document.addEventListener('click', function(e) {
+                const sidebar = document.getElementById('sidebar');
+                const menuBtn = document.getElementById('mobile-menu-btn');
+                
+                if (window.innerWidth < 1024 && !sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98aca40ea2a012b0',t:'MTc1OTgzMjE2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
